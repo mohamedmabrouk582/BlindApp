@@ -15,7 +15,6 @@ import com.example.mohamed.blindapp.oneSignal.model.Content;
 import com.example.mohamed.blindapp.oneSignal.model.Data;
 import com.example.mohamed.blindapp.oneSignal.model.Heading;
 import com.example.mohamed.blindapp.presenter.base.BasePresenter;
-import com.example.mohamed.blindapp.utils.PhoneCallListener;
 import com.example.mohamed.blindapp.view.ChooseView;
 
 /**
@@ -35,10 +34,6 @@ public class ChooseActionViewPresenter<v extends ChooseView> extends BasePresent
 
     @Override
     public void callPhone(String phone) {
-        PhoneCallListener phoneListener = new PhoneCallListener(activity);
-        TelephonyManager telephonyManager = (TelephonyManager)
-                activity.getSystemService(Context.TELEPHONY_SERVICE);
-        telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
         activity.startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+phone)));
 
     }

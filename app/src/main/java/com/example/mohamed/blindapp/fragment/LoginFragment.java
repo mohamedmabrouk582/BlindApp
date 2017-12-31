@@ -77,9 +77,9 @@ public class LoginFragment extends Fragment implements LoginView,View.OnClickLis
            showProgress();
            presenter.login(phone, pass, new AddListener() {
                @Override
-               public void onSuccess() {
+               public void onSuccess(String s) {
                    hideProgress();
-                   HomeActivity.start(getActivity());
+                   HomeActivity.start(getActivity(),true);
                    getActivity().finish();
                }
 

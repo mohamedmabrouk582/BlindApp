@@ -1,4 +1,5 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <item name="ic_menu_edit" type="drawable">@drawable/ic_mode_edit</item>
     <item name="ic_menu_logout" type="drawable">@drawable/ic_logout</item>
+    <item name="ic_menu_share" type="drawable">@android:drawable/ic_menu_share</item>
 </resources>

@@ -3,6 +3,7 @@ package com.example.mohamed.blindapp.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.speech.tts.TextToSpeech;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.onesignal.OneSignal;
 import org.json.JSONException;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -44,10 +46,7 @@ public class NotificationExtenderExample extends NotificationExtenderService {
                 Log.d("rrrr", "rrrrrrrrrrr" +notification.payload.additionalData.getString("location") );
            //    Result.getInstance().setmsg(notification.payload.additionalData.getString("location"));
 
-                PhoneCallListener phoneListener = new PhoneCallListener(getBaseContext());
-                TelephonyManager telephonyManager = (TelephonyManager) this
-                        .getSystemService(Context.TELEPHONY_SERVICE);
-                telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+
                  startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+notification.payload.additionalData.getString("location"))));
                  flage=true;
             }else {
@@ -86,4 +85,6 @@ public class NotificationExtenderExample extends NotificationExtenderService {
 //        OSNotificationDisplayedResult osNotificationDisplayedResult=displayNotification(overrideSettings);
         return flage;
     }
+
+
 }

@@ -56,7 +56,7 @@ public class RegisterViewPresenter<v extends RegisterView> extends BasePresenter
                        public void onSuccess(Void aVoid) {
                            dataManager.clear();
                            dataManager.setUser(userName,email,type,userId);
-                          listener.onSuccess();
+                          listener.onSuccess("");
                        }
                    });
                }else {

@@ -109,9 +109,9 @@ public class RegisterFragment extends Fragment implements RegisterView,View.OnCl
              public void idsAvailable(String userId, String registrationId) {
                  presenter.register(name, phone, pass, type,userId, new AddListener() {
                      @Override
-                     public void onSuccess() {
+                     public void onSuccess(String s) {
                          hideProgress();
-                         HomeActivity.start(getActivity());
+                         HomeActivity.start(getActivity(),true);
                          getActivity().finish();
                      }
 

@@ -46,11 +46,12 @@ public class EditProfileViewPresenter<v extends EditProfileView> extends BasePre
             @Override
             public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                   if (databaseError==null){
+                      String d=type.equals(dataManager.getUser().getType())?"no":"yes";
                       dataManager.putName(name);
                       dataManager.putPhone(phone);
                       dataManager.putType(type);
                       getView().close();
-                      listener.onSuccess();
+                      listener.onSuccess(d);
                   }else {
                      listener.onError(databaseError.getMessage());
                   }

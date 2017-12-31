@@ -50,7 +50,7 @@ public class LoginViewPresenter<v extends LoginView> extends BasePresenter<v> im
                          User user=dataSnapshot.getValue(User.class);
                          Log.d("myUser", user + "");
                          dataManager.setUser(user.getName(),user.getPhone(),user.getType(),user.getUserid());
-                         listener.onSuccess();
+                         listener.onSuccess("");
                      }
 
                      @Override

@@ -21,4 +21,7 @@
         <item>Helper</item>
     </string-array>
     <string name="title_activity_maps">Map</string>
+    <string name="share">Share ..</string>
+    <string name="massage">Your Massage</string>
+    <string name="subject">Your Subject</string>
 </resources>

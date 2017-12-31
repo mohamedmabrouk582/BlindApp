@@ -7,6 +7,6 @@ package com.example.mohamed.blindapp.utils;
  */
 
 public interface AddListener {
-    void onSuccess();
+    void onSuccess(String s);
     void onError(String error);
 }

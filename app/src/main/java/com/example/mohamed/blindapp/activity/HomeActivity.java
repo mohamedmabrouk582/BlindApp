@@ -2,6 +2,7 @@ package com.example.mohamed.blindapp.activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,6 +12,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -38,10 +40,13 @@ import com.example.mohamed.blindapp.data.User;
 import com.example.mohamed.blindapp.fragment.BlindFragment;
 import com.example.mohamed.blindapp.fragment.EditProfileFragment;
 import com.example.mohamed.blindapp.fragment.HelperFragment;
+import com.example.mohamed.blindapp.fragment.ShareFragment;
 import com.example.mohamed.blindapp.presenter.home.HomeViewPresenter;
 import com.example.mohamed.blindapp.utils.AddListener;
 import com.example.mohamed.blindapp.utils.Result;
 import com.example.mohamed.blindapp.view.HomeView;
+
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -49,17 +54,32 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , HomeView{
     private static final String USER = "USERS";
     private static final int PERMISSION = 0;
+    private static final String LOGIN = "login";
     private CircleImageView img;
     private TextView name,phone;
     private User mUser;
+    private TextToSpeech mTextToSpeech;
+
     private HomeViewPresenter presenter;
-    private String[] permissions={Manifest.permission.CALL_PHONE,Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_NETWORK_STATE,
+    private String[] permissions={Manifest.permission.CALL_PHONE,Manifest.permission.ACCESS_NETWORK_STATE,
             Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS};
     private DataManager dataManager;
-    public static void start( Context context){
-        Intent intent=new Intent(context,HomeActivity.class);
-        context.startActivity(intent);
+    public static void start(Activity context, boolean isLogin){
+            if (isLogin){
+                Intent i = context.getPackageManager()
+                        .getLaunchIntentForPackage(
+                                context.getPackageName());
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(i);
+                System.exit(0);
+
+            }else {
+                Intent intent = new Intent(context, HomeActivity.class);
+                context.startActivity(intent);
+            }
+
+
+
     }
 
     @SuppressLint("MissingPermission")
@@ -87,6 +107,8 @@ public class HomeActivity extends AppCompatActivity
         presenter.attachView(this);
         init(navigationView.getHeaderView(0));
         setData(mUser);
+
+
 
 
     }
@@ -123,9 +145,9 @@ public class HomeActivity extends AppCompatActivity
             FragmentManager fragmentManager=getSupportFragmentManager();
             EditProfileFragment fragment=EditProfileFragment.newFragment(new AddListener() {
                 @Override
-                public void onSuccess() {
+                public void onSuccess(String s) {
                     mUser=dataManager.getUser();
-                  setData(mUser);
+                    setData(mUser);
                 }
 
                 @Override
@@ -137,6 +159,10 @@ public class HomeActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_logout) {
              presenter.logout();
+        }else if (id==R.id.nav_invite){
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            ShareFragment fragment=new ShareFragment();
+            fragment.show(fragmentManager,"");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -149,6 +175,19 @@ public class HomeActivity extends AppCompatActivity
     public void checkUser(String type) {
         Toast.makeText(this, type, Toast.LENGTH_SHORT).show();
         if (type.equals("Blind")){
+            mTextToSpeech=new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+                @Override
+                public void onInit(int i) {
+                    if(i == TextToSpeech.SUCCESS) {
+                       mTextToSpeech.setLanguage(Locale.US);
+                        mTextToSpeech.speak("Hello . i hope you . are well . click to . screen  center . to send . notification", TextToSpeech.QUEUE_FLUSH, null);
+
+                    }
+                }
+            });
+
+
+
             setFragment(BlindFragment.blindFragment());
         }else {
            setFragment(HelperFragment.newFragment());
@@ -169,7 +208,7 @@ public class HomeActivity extends AppCompatActivity
 //                    } else {
 //                        requestPermissions(new String[]{permissions[i]}, PERMISSION);
 //                    }
-                    requestPermissions(new String[]{permissions[i]}, PERMISSION);
+                    requestPermissions(permissions, PERMISSION);
                 }
             }
         }catch (Exception e){}
@@ -181,5 +220,12 @@ public class HomeActivity extends AppCompatActivity
         fragmentManager.beginTransaction().replace(R.id.Fragment_Container,fragment).commit();
     }
 
-
+    @Override
+    protected void onPause() {
+        if (mTextToSpeech!=null){
+            mTextToSpeech.stop();
+            mTextToSpeech.shutdown();
+        }
+        super.onPause();
+    }
 }

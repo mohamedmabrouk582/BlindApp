@@ -26,12 +26,13 @@ public class SplashViewPresenter<v extends SplashView> extends BasePresenter<v> 
 
     @Override
     public void HomeActivity() {
-        HomeActivity.start(activity);
+        HomeActivity.start(activity,false);
+        activity.finish();
     }
 
     @Override
     public void loginActivity() {
         LoginActivity.start(activity);
-
+        activity.finish();
     }
 }

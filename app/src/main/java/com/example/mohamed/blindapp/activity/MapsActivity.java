@@ -1,8 +1,12 @@
 package com.example.mohamed.blindapp.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,18 +27,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String location;
 
 
-    public static void start(Context context, String location){
-        Intent intent=new Intent(context,MapsActivity.class);
-        intent.putExtra(MAP,location);
+    public static void start(Context context, String location) {
+        Intent intent = new Intent(context, MapsActivity.class);
+        intent.putExtra(MAP, location);
         context.startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        location=getIntent().getStringExtra(MAP);
-        location=location.replace("lat/lng: (","");
-        location=location.replace(")","");
+        location = getIntent().getStringExtra(MAP);
+        location = location.replace("lat/lng: (", "");
+        location = location.replace(")", "");
         Log.d("location", location + "");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -52,13 +57,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
-    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         String[] split = location.split(",");
 
         // Add a marker in Sydney and move the camera
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
+            }else {
+                return;
+            }
+        }
         mMap.setMyLocationEnabled(true);
         LatLng sydney =new LatLng(Double.parseDouble(split[0]),Double.parseDouble(split[1]));
         Log.d("latlan", sydney.latitude + " : "+sydney.longitude);

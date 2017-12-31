@@ -9,6 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,7 @@ public class BlindFragment extends Fragment implements View.OnClickListener,Blin
     private Button helpButton;
     private BlindViewPresenter presenter;
     private String mLocation;
+    private TextToSpeech mTextToSpeech;
 
     public static BlindFragment blindFragment(){
         return new BlindFragment();
@@ -57,6 +59,15 @@ public class BlindFragment extends Fragment implements View.OnClickListener,Blin
     @SuppressLint("MissingPermission")
     @Override
     public void onClick(View view) {
+        mTextToSpeech=new TextToSpeech(getActivity(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i == TextToSpeech.SUCCESS) {
+                    mTextToSpeech.setLanguage(Locale.US);
+                    mTextToSpeech.speak("Hello .  your help . Request Processing . please Wait", TextToSpeech.QUEUE_FLUSH, null);
+                }
+            }
+        });
         LocationManager locationManager= (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
          locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER,this, Looper.getMainLooper());
     }
@@ -85,16 +96,42 @@ public class BlindFragment extends Fragment implements View.OnClickListener,Blin
     }
 
     @Override
-    public void onResponse(String response) {
+    public void onResponse(final String response) {
         Log.d("response", response + "");
-
+        mTextToSpeech=new TextToSpeech(getActivity(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i == TextToSpeech.SUCCESS) {
+                    mTextToSpeech.setLanguage(Locale.US);
+                    mTextToSpeech.speak("congratulations . Your Notification  . send Successfully  ", TextToSpeech.QUEUE_FLUSH, null);
+                }
+            }
+        });
         Toast.makeText(getActivity(), response, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onError(String error) {
+    public void onError(final String error) {
         Log.d("error", error + "");
+        mTextToSpeech=new TextToSpeech(getActivity(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i == TextToSpeech.SUCCESS) {
+                    mTextToSpeech.setLanguage(Locale.US);
+                    mTextToSpeech.speak(error, TextToSpeech.QUEUE_FLUSH, null);
+                }
+            }
+        });
         Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onPause() {
+        if (mTextToSpeech!=null){
+            mTextToSpeech.stop();
+            mTextToSpeech.shutdown();
+        }
+        super.onPause();
     }
 }

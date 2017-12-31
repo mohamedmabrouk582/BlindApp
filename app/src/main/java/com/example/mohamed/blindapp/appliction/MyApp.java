@@ -19,7 +19,7 @@ public class MyApp extends Application{
     public void onCreate() {
         super.onCreate();
         OneSignal.startInit(this)
-                .autoPromptLocation(true)
+                .autoPromptLocation(false)
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .init();
         MyShared myShared=new MyShared(this);
