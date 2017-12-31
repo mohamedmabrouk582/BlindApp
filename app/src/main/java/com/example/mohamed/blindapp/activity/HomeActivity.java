@@ -36,8 +36,10 @@ import com.example.mohamed.blindapp.appliction.DataManager;
 import com.example.mohamed.blindapp.appliction.MyApp;
 import com.example.mohamed.blindapp.data.User;
 import com.example.mohamed.blindapp.fragment.BlindFragment;
+import com.example.mohamed.blindapp.fragment.EditProfileFragment;
 import com.example.mohamed.blindapp.fragment.HelperFragment;
 import com.example.mohamed.blindapp.presenter.home.HomeViewPresenter;
+import com.example.mohamed.blindapp.utils.AddListener;
 import com.example.mohamed.blindapp.utils.Result;
 import com.example.mohamed.blindapp.view.HomeView;
 
@@ -51,7 +53,9 @@ public class HomeActivity extends AppCompatActivity
     private TextView name,phone;
     private User mUser;
     private HomeViewPresenter presenter;
-    private String[] permissions={Manifest.permission.CALL_PHONE};
+    private String[] permissions={Manifest.permission.CALL_PHONE,Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_NETWORK_STATE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS};
     private DataManager dataManager;
     public static void start( Context context){
         Intent intent=new Intent(context,HomeActivity.class);
@@ -116,6 +120,20 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_edit) {
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            EditProfileFragment fragment=EditProfileFragment.newFragment(new AddListener() {
+                @Override
+                public void onSuccess() {
+                    mUser=dataManager.getUser();
+                  setData(mUser);
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            });
+            fragment.show(fragmentManager,"");
             // Handle the camera action
         } else if (id == R.id.nav_logout) {
              presenter.logout();

@@ -28,14 +28,14 @@
             app:civ_border_width="1px"
             app:civ_circle_background_color="@color/background" />
 
-        <ImageView
-            android:id="@+id/edit_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="@dimen/_5sdp"
-            app:srcCompat="@drawable/ic_edt"
-            tools:ignore="VectorDrawableCompat" />
+        <!--<ImageView-->
+            <!--android:id="@+id/edit_img"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="bottom|right"-->
+            <!--android:layout_marginBottom="@dimen/_5sdp"-->
+            <!--app:srcCompat="@drawable/ic_edt"-->
+            <!--tools:ignore="VectorDrawableCompat" />-->
         <ProgressBar
             android:visibility="gone"
             android:id="@+id/img_load"

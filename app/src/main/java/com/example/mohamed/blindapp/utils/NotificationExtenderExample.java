@@ -1,7 +1,10 @@
 package com.example.mohamed.blindapp.utils;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.example.mohamed.blindapp.appliction.DataManager;
@@ -40,6 +43,11 @@ public class NotificationExtenderExample extends NotificationExtenderService {
                 // call    ***********
                 Log.d("rrrr", "rrrrrrrrrrr" +notification.payload.additionalData.getString("location") );
            //    Result.getInstance().setmsg(notification.payload.additionalData.getString("location"));
+
+                PhoneCallListener phoneListener = new PhoneCallListener(getBaseContext());
+                TelephonyManager telephonyManager = (TelephonyManager) this
+                        .getSystemService(Context.TELEPHONY_SERVICE);
+                telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
                  startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+notification.payload.additionalData.getString("location"))));
                  flage=true;
             }else {

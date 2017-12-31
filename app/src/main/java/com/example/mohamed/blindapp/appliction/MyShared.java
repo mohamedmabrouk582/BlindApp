@@ -28,6 +28,20 @@ public class MyShared {
         mEditor=mSharedPreferences.edit();
     }
 
+    public void setName(String name){
+        mEditor.remove(NAME);
+        mEditor.putString(NAME,name).apply();
+    }
+  public void setPhone(String phone){
+        mEditor.remove(PHONE);
+        mEditor.putString(PHONE,phone).apply();
+    }
+
+  public void setType(String type){
+        mEditor.remove(TYPE);
+        mEditor.putString(TYPE,type).apply();
+    }
+
     public void setUser(String name ,String phone,String type,String userId){
         mEditor.clear();
         mEditor.putString(NAME,name);

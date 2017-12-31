@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mohamed.blindapp.R;
+import com.example.mohamed.blindapp.activity.MapsActivity;
 import com.example.mohamed.blindapp.appliction.DataManager;
 import com.example.mohamed.blindapp.appliction.MyApp;
 import com.example.mohamed.blindapp.data.Request;
@@ -146,6 +147,12 @@ public class HelperFragment extends Fragment implements HelperView{
            @Override
            protected void onBindViewHolder(@NonNull Holder holder, final int position, @NonNull final Request model) {
              holder.bind(model);
+             holder.location.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View view) {
+                     MapsActivity.start(getActivity(),model.getLocation());
+                 }
+             });
              holder.itemView.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View view) {

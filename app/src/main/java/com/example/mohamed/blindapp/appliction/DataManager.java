@@ -20,6 +20,16 @@ public class DataManager {
         myShared.setUser(name,phone,type,userID);
     }
 
+    public void putName(String name){
+        myShared.setName(name);
+    }
+    public void putPhone(String phone){
+        myShared.setPhone(phone);
+    }
+    public void putType(String type){
+        myShared.setType(type);
+    }
+
     public User getUser(){
         return myShared.getUser();
     }

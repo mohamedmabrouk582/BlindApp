@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.mohamed.blindapp"
-        manifestPlaceholders = [onesignal_app_id: "5c87b77c-3c94-4d43-9b01-7cc3030e79e6",
+        manifestPlaceholders = [onesignal_app_id               : "5c87b77c-3c94-4d43-9b01-7cc3030e79e6",
                                 // Project number pulled from dashboard, local value is ignored.
                                 onesignal_google_project_number: "REMOTE"]
         minSdkVersion 16
@@ -29,6 +29,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:11.6.2'
     implementation 'com.google.firebase:firebase-database:11.6.2'
     implementation 'com.google.firebase:firebase-invites:11.6.2'
+    implementation 'com.google.android.gms:play-services-maps:11.6.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
@@ -44,6 +45,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui:3.1.2'
 
 }
+
 
 
 
