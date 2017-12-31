@@ -211,7 +211,9 @@ public class HomeActivity extends AppCompatActivity
                     requestPermissions(permissions, PERMISSION);
                 }
             }
-        }catch (Exception e){}
+        }catch (Exception e){
+
+        }
     }
 
     @Override
