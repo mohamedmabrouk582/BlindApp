@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "940414880378",
+    "firebase_url": "https://blindapp-d60ae.firebaseio.com",
+    "project_id": "blindapp-d60ae",
+    "storage_bucket": "blindapp-d60ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:940414880378:android:89164ce742f1a0a5",
+        "android_client_info": {
+          "package_name": "com.example.mohamed.blindapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "940414880378-kft9r4tf0ivipn2rnrgpj1l199sa1kr4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mohamed.blindapp",
+            "certificate_hash": "b54931cd6c834ac5b134f7c8322e90dd87a7dba1"
+          }
+        },
+        {
+          "client_id": "940414880378-bnjgo1liram2hodd2ibqph6t1k17j04l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQOLwsTB2BwBQ5jJsURId3Z5ctP4gMcg4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "940414880378-bnjgo1liram2hodd2ibqph6t1k17j04l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
